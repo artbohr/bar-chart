@@ -1,8 +1,8 @@
 const URL = 'https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/master/GDP-data.json';
 
-const height = 450;
-const width = 900;
-const margin = {left:50, top:40};
+const margin = {top: 20, right: 20, bottom: 40, left: 50};
+const width = 900 - margin.left - margin.right;
+const height = 500 - margin.top - margin.bottom;
 const parseDate = d3.timeParse("%Y-%m-%d");
 const yearMonth = d3.timeFormat("%b %Y");
 
@@ -24,7 +24,9 @@ d3.json(URL).get((error,data)=>{
   const yAxis = d3.axisLeft(y);
   const xAxis = d3.axisBottom(x);
 
-  const svg = d3.select("body").append("svg").attr("height","1500").attr("width","1000");
+  const svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height+ margin.top + margin.bottom);
   const chartGroup = svg.append("g").attr("transform","translate("+margin.left+","+margin.top+")");
 
   //draw bars
@@ -38,7 +40,7 @@ d3.json(URL).get((error,data)=>{
                   .attr("y", d=> y(d[1]))
                     .on("mouseover", function() {
                       d3.select(this).style("fill", "#BDC2C6");
-                      tooltip.style("visibility", "visible")
+                      tooltip.style("visibility", "visible");
                       })
                     .on("mouseout", function() {
                       d3.select(this).style("fill", "#8F5973");
